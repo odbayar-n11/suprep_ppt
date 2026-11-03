@@ -1054,6 +1054,9 @@ body:not(.on-dark) .seg.active { background: var(--ink); }
 .fitted-wordmark { display: block; width: 100%; height: auto; aspect-ratio: 1356 / 382; overflow: visible; scale: .96 1.60434718; transform-origin: center top; }
 .fitted-wordmark text { font-family: var(--f-pop); font-size: 100px; font-weight: 800; letter-spacing: 0; fill: #fff; }
 @media(max-width:760px) { .metric-heading { column-gap: 16px; } .metric-heading .h2 { font-size: clamp(24px,4.6vw,40px); } }
+.media-side { min-width: 0; }
+.media-side .media { margin-top: 0; }
+.media-note { background: transparent; border: 2px solid #000; border-radius: 0; box-shadow: none; font-family: var(--f-body); font-size: clamp(17px,1.5vw,22px); font-weight: 600; line-height: 1.4; margin: clamp(16px,2.5vh,28px) 0 0; padding: clamp(18px,2vw,28px); color: #000; }
 </style>
 </head>
 
@@ -1559,7 +1562,10 @@ const RENDER = {
   media: s => s.layout === 'split'
     ? `<div class="wrap cols">
         <div>${kick(s, 0)}<h2 ${rv(1, 'h2')}>${txt(s.title)}</h2>${s.sub ? `<p ${rv(2, 'lead')}>${txt(s.sub)}</p>` : ''}</div>
-        <div class="media">${s.media.map((m, i) => m.desmos ? desmosHTML(m, i + 3) : ph(m, i + 3)).join('')}</div>
+        <div class="media-side">
+          <div class="media">${s.media.map((m, i) => m.desmos ? desmosHTML(m, i + 3) : ph(m, i + 3)).join('')}</div>
+          ${s.intro ? `<p ${rv(4, 'media-note')}>${esc(s.intro)}</p>` : ''}
+        </div>
       </div>`
     : `<div class="wrap">
         ${kick(s, 0)}${s.title ? `<h2 ${rv(1, 'h2')}>${txt(s.title)}</h2>` : ''}
